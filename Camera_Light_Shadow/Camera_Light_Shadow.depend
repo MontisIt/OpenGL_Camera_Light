@@ -1,0 +1,22 @@
+# depslib dependency file v1.0
+1714312071 source:d:\university\Компьютерная графика\camera_light_shadow\main.cpp
+	<windows.h>
+	<gl/gl.h>
+	"camera.h"
+	"location.h"
+
+1714310788 source:d:\university\Компьютерная графика\camera_light_shadow\camera.cpp
+	<windows.h>
+	<gl/gl.h>
+	"camera.h"
+	<math.h>
+
+1714275611 d:\university\Компьютерная графика\camera_light_shadow\camera.h
+
+1714311262 source:d:\university\Компьютерная графика\camera_light_shadow\src\location.cpp
+	<windows.h>
+	<gl/gl.h>
+	"location.h"
+
+1714311261 d:\university\Компьютерная графика\camera_light_shadow\include\location.h
+
