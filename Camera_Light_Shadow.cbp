@@ -43,10 +43,16 @@
 		<Unit filename="camera.h">
 			<Option target="Debug" />
 		</Unit>
+		<Unit filename="include/light.h">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="include/location.h">
 			<Option target="Debug" />
 		</Unit>
 		<Unit filename="main.cpp" />
+		<Unit filename="src/light.cpp">
+			<Option target="Debug" />
+		</Unit>
 		<Unit filename="src/location.cpp">
 			<Option target="Debug" />
 		</Unit>

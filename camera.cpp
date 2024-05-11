@@ -3,8 +3,10 @@
 #include "camera.h"
 #include <math.h>
 
+using namespace std;
 //struct SCamera camera={0,0,1.7, 0,0};
-struct SCamera camera={0,0,2.5, 400,0};
+//struct SCamera camera={0,0,2.5, 400,0};
+struct SCamera camera={0,-13,2.5, 420,0};
 void Camera_Apply(){
 glRotatef(-camera.Xrot,1,0,0);
 glRotatef(-camera.Zrot,0,0,1);

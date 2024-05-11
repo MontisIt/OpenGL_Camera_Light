@@ -1,6 +1,8 @@
 #ifndef CAMERA_H_INCLUDED
 #define CAMERA_H_INCLUDED
 
+
+
 struct SCamera {
     float x,y,z;
     float Xrot,Zrot;

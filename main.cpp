@@ -1,7 +1,16 @@
 #include <windows.h>
 #include <gl/gl.h>
+#include <iostream>
+#include "math.h"
 #include "camera.h"
 #include "location.h"
+#include "light.h"
+
+using namespace std;
+
+float theta = 0.0f;
+
+
 LRESULT CALLBACK WindowProc(HWND, UINT, WPARAM, LPARAM);
 void EnableOpenGL(HWND hwnd, HDC*, HGLRC*);
 void DisableOpenGL(HWND, HDC, HGLRC);
@@ -22,8 +31,12 @@ void WndResize(int x, int y){
     glViewport(0,0,x,y); //перестраивает размеры окна
     float k=x/(float)y; //соотношение сторон
     float sz = 0.1; //единица размера
-    glLoadIdentity(); //загрузка единичной матрицы
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();//загрузка единичной матрицы
     glFrustum(-k*sz, k*sz, -sz, sz, sz*2, 100); //установка перспективной проэкции
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 
@@ -65,7 +78,7 @@ int WINAPI WinMain(HINSTANCE hInstance,
                           WS_OVERLAPPEDWINDOW,
                           CW_USEDEFAULT,
                           CW_USEDEFAULT,
-                          500,
+                          700,
                           500,
                           NULL,
                           NULL,
@@ -81,8 +94,18 @@ int WINAPI WinMain(HINSTANCE hInstance,
     GetClientRect(hwnd,&rct);
     WndResize(rct.right,rct.bottom);
 
+
+
     //glFrustum(-1,1, -1,1, 2,80);
     glEnable(GL_DEPTH_TEST); /*тест глубины*/
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glEnable(GL_LIGHTING);
+    //glEnable(GL_LIGHT0);
+    //Init_Material();
+    Init_Light();
+
+
 
     /* program main loop */
     while (!bQuit)
@@ -112,21 +135,45 @@ int WINAPI WinMain(HINSTANCE hInstance,
 
             glPushMatrix();
 
-
-            /*glBegin(GL_TRIANGLES);
-
-                glColor3f(1.0f, 0.0f, 0.0f);   glVertex3f(0.0f,   0.0f , 1);    glVertex3f(0, 1, 1);
-                glColor3f(0.0f, 1.0f, 0.0f);   glVertex3f(0.0f,   0, 1);        glVertex3f(1, 0, 1);
-                glColor3f(0.0f, 0.0f, 1.0f);   glVertex3f(0.0f,   0, 1);;       glVertex3f(0, 0, 2);
-
-            glEnd();*/
             if (GetForegroundWindow()==hwnd) MoveCamera();
-            Scene(10);
+                glPushMatrix();
+
+                    LightOverlord(theta);
+                    DrawCube(0,-8,1, 0.5, 0.5,0.5,1);
+                    Scene(10);
+                        //glRotatef(45,0,0,1);
+                        //drawPrism(1,1, 2, 4,  0,5,1, 1);
+                        //glRotatef(45*2,0,0,1);
+                        //drawPrism(1,1, 2, 4,  2,4.5,1, 0.9);
+                        //drawPrism(1,1, 2, 4,  4,4,1, 0.8);
+                       // drawPrism(1,1, 2, 4, 2,3.5,1, 0.7);
+                        //drawPrism(1,1, 2, 4, 8,3,1, 0.6);
+                        //drawPrism(1,1, 2, 4, 10,2.5,1, 0.5);
+                        //drawPrism(1,1, 2, 4, 12,2,1, 0.4);
+                        //drawPrism(1,1, 2, 4, 14,1.5,1, 0.3);
+                        //DrawFigure(1,1, 1, 4, 15.5,5.5,1, 1);
+                        //DrawFigure(1,1, 2, 4, 16,0.5,1, 0.1);
+                        //DrawFigure(1,1, 2, 4, 18,0,1, 0);
+                        GLint a=5;
+                        GLint b=1;
+                        GLfloat alfa=(45*M_PI)/180;
+                        float k=1;
+                        for(int i=0;i<7;i++){
+                           //glRotatef(45*i,0,0,1);
+                           DrawFigure(1,1, 1, 9,  a*sin(M_PI_4*i)+b,a*cos(M_PI_4*i)+b,1, k);
+                           k-=0.1;
+                           //cout<<a*cos(M_PI_4*i)+b<<endl;
+                           //cout<<a*sin(M_PI_4*i)+b<<endl;
+                        }
+                        //cout<<"--------------------"<<endl;
+
+
+                glPopMatrix();
             glPopMatrix();
 
             SwapBuffers(hDC);
 
-
+            theta += -0.01;
             Sleep (1);
         }
     }
@@ -206,4 +253,5 @@ void DisableOpenGL (HWND hwnd, HDC hDC, HGLRC hRC)
     wglDeleteContext(hRC);
     ReleaseDC(hwnd, hDC);
 }
+
 
